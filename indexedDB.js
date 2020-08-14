@@ -1,5 +1,6 @@
-function getData({
+function getInstance({
   databaseName,
+  tableName,
   version
 }) {
   return new Promise(function (resolve, reject) {
@@ -11,7 +12,7 @@ function getData({
     };
     request.onupgradeneeded = function (event) {
       db = event.target.result;
-      var objectStore = db.createObjectStore('person', { keyPath: 'id' });
+      var objectStore = db.createObjectStore(tableName, { keyPath: 'id' });
       // create index for name
       objectStore.createIndex('name', 'name', { unique: false });
       // create index for emali
@@ -21,51 +22,105 @@ function getData({
       db = request.result;
       console.log('数据库打开成功');
       // add data
-      add({
-        id: 1,
-        data: { id: 1, name: '张三', age: 24, email: 'zhangsan@example.com' },
-        db
-      });
-      add({
-        id: 2,
-        data: { id: 2, name: '张三2', age: 25, email: 'zhangsan2@example.com' },
-        db
-      });
-      // read data
-      read({
-        id: 1
-      });
-      read({
-        id: 2
-      });
-      // read data
-      readAll();
-      update({
-        id: 1,
-        data: {
-          name: 'i张三',
-          age: 124,
-          email: 'izhangsan@example.com'
+      let instance = {
+        add: ({
+          id,
+          db,
+          data
+        }) => {
+          add({
+            id,
+            db,
+            data,
+            tableName
+          })
+        },
+        update: ({
+          id,
+          data
+        }) => {
+          update({
+            id,
+            db,
+            data,
+            tableName
+          })
+        },
+        read: ({
+          id
+        }) => {
+          read({
+            id,
+            db,
+            tableName
+          })
+        },
+        readAll: ({
+          tableName
+        }) => {
+          readAll({
+            tableName
+          })
+        },
+        readByIndex: ({
+          tableName
+        }) => {
+          readByIndex({
+            tableName
+          })
         }
-      });
+      }
+      resolve(instance);
     };
-    resolve('success')
-  }).then((e) => { console.log(e) }, () => { })
+  })
 }
 
-getData({
+getInstance({
   databaseName: 'webassembly',
+  tableName: 'person',
   version: 1
+}).then((instance) => {
+  instance.add({
+    id: 1,
+    data: { id: 1, name: '张三', age: 24, email: 'zhangsan@example.com' },
+    db
+  });
+  // add({
+  //   id: 2,
+  //   data: { id: 2, name: '张三2', age: 25, email: 'zhangsan2@example.com' },
+  //   db
+  // });
+  // // read data
+  // read({
+  //   id: 1
+  // });
+  // read({
+  //   id: 2
+  // });
+  // // read data
+  // readAll();
+  // update({
+  //   id: 1,
+  //   data: {
+  //     name: 'i张三',
+  //     age: 124,
+  //     email: 'izhangsan@example.com'
+  //   }
+  // });
+}, (err) => {
+
 })
+
 
 // add method
 function add({
   db,
   id,
-  data
+  data,
+  tableName
 }) {
-  var request = db.transaction(['person'], 'readwrite')
-    .objectStore('person')
+  var request = db.transaction([tableName], 'readwrite')
+    .objectStore(tableName)
     .add({
       id,
       ...data
@@ -79,6 +134,7 @@ function add({
     console.log(event.currentTarget.error.message);
     console.log('数据写入失败');
   }
+  // return db;
 }
 
 // read data
@@ -165,10 +221,12 @@ function remove({
 
 // remove();
 
-function getByIndex() {
+function readByIndex({
+  indexKey
+}) {
   var transaction = db.transaction(['person'], 'readonly'); // 
   var store = transaction.objectStore('person');
-  var index = store.index('name');
+  var index = store.index(indexKey);
   var request = index.get('李四');
 
   request.onsuccess = function (e) {
