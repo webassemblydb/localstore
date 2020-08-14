@@ -25,7 +25,6 @@ function getInstance({
       let instance = {
         add: ({
           id,
-          db,
           data
         }) => {
           add({
@@ -66,6 +65,7 @@ function getInstance({
           tableName
         }) => {
           readByIndex({
+            db,
             tableName
           })
         }
@@ -82,18 +82,16 @@ getInstance({
 }).then((instance) => {
   instance.add({
     id: 1,
-    data: { id: 1, name: '张三', age: 24, email: 'zhangsan@example.com' },
-    db
+    data: { id: 1, name: '张三', age: 24, email: 'zhangsan@example.com' }
   });
-  // add({
-  //   id: 2,
-  //   data: { id: 2, name: '张三2', age: 25, email: 'zhangsan2@example.com' },
-  //   db
-  // });
-  // // read data
-  // read({
-  //   id: 1
-  // });
+  add({
+    id: 2,
+    data: { id: 2, name: '张三2', age: 25, email: 'zhangsan2@example.com' }
+  });
+  // read data
+  read({
+    id: 1
+  });
   // read({
   //   id: 2
   // });
@@ -108,7 +106,6 @@ getInstance({
   //   }
   // });
 }, (err) => {
-
 })
 
 
