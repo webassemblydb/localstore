@@ -81,6 +81,7 @@ function add({
   }
 }
 
+// read data
 function read({
   id
 }) {
@@ -103,6 +104,8 @@ function read({
   };
 }
 
+
+// read data list
 function readAll() {
   var queryResult = [];
   var objectStore = db.transaction('person').objectStore('person');
@@ -147,10 +150,13 @@ function update({
   }
 }
 
-function remove() {
+// remove data
+function remove({
+  id
+}) {
   var request = db.transaction(['person'], 'readwrite')
     .objectStore('person')
-    .delete(1);
+    .delete(id);
 
   request.onsuccess = function (event) {
     console.log('数据删除成功');
