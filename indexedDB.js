@@ -55,17 +55,21 @@ function getInstance({
           })
         },
         readAll: ({
-          tableName
         }) => {
           readAll({
+            db,
             tableName
           })
         },
         readByIndex: ({
-          tableName
+          tableName,
+          indexKey,
+          indexValue
         }) => {
           readByIndex({
             db,
+            indexKey,
+            indexValue,
             tableName
           })
         }
@@ -84,27 +88,32 @@ getInstance({
     id: 1,
     data: { id: 1, name: '张三', age: 24, email: 'zhangsan@example.com' }
   });
-  add({
+  instance.add({
     id: 2,
     data: { id: 2, name: '张三2', age: 25, email: 'zhangsan2@example.com' }
   });
   // read data
-  read({
+  instance.read({
     id: 1
   });
-  // read({
-  //   id: 2
-  // });
+  instance.read({
+    id: 2
+  });
   // // read data
-  // readAll();
-  // update({
-  //   id: 1,
-  //   data: {
-  //     name: 'i张三',
-  //     age: 124,
-  //     email: 'izhangsan@example.com'
-  //   }
-  // });
+  readAll({
+  });
+  instance.update({
+    id: 1,
+    data: {
+      name: 'i张三',
+      age: 124,
+      email: 'izhangsan@example.com'
+    }
+  });
+  instance.readByIndex({
+    indexKey: 'name',
+    indexValue: 'i张三'
+  })
 }, (err) => {
 })
 
@@ -136,10 +145,12 @@ function add({
 
 // read data
 function read({
+  tableName,
+  db,
   id
 }) {
-  var transaction = db.transaction(['person']);
-  var objectStore = transaction.objectStore('person');
+  var transaction = db.transaction([tableName]);
+  var objectStore = transaction.objectStore(tableName);
   var request = objectStore.get(id);
 
   request.onerror = function (event) {
@@ -184,11 +195,13 @@ function readAll() {
 }
 
 function update({
+  db,
   id,
+  tableName,
   data
 }) {
-  var request = db.transaction(['person'], 'readwrite')
-    .objectStore('person')
+  var request = db.transaction([tableName], 'readwrite')
+    .objectStore(tableName)
     .put({
       id,
       ...data
@@ -207,8 +220,8 @@ function update({
 function remove({
   id
 }) {
-  var request = db.transaction(['person'], 'readwrite')
-    .objectStore('person')
+  var request = db.transaction([tableName], 'readwrite')
+    .objectStore(tableName)
     .delete(id);
 
   request.onsuccess = function (event) {
@@ -219,16 +232,20 @@ function remove({
 // remove();
 
 function readByIndex({
-  indexKey
+  indexKey,
+  indexValue
 }) {
   var transaction = db.transaction(['person'], 'readonly'); // 
   var store = transaction.objectStore('person');
   var index = store.index(indexKey);
-  var request = index.get('李四');
+  var request = index.get(indexValue);
 
   request.onsuccess = function (e) {
     var result = e.target.result;
     if (result) {
+      console.log('Name: ' + result.name);
+      console.log('Age: ' + result.age);
+      console.log('Email: ' + result.email);
       // ...
     } else {
       // ...
