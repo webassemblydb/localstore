@@ -8,10 +8,26 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                // exclude: /node_modules/
+            },
             // 针对css文件使用的loader，注意有先后顺序，数组项越靠后越先执行
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: '[name].[ext]?[hash]'
+                }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+                loader: 'file-loader'
+            },
             { test: /\.ts$/, use: 'ts-loader' }
-        ]
+        ],
     },
     resolve: {
         alias: {
