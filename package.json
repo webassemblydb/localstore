@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "echarts": "^4.8.0"
+    "echarts": "^4.8.0",
+    "element-ui": "^2.13.2",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "webpack": "^4.44.1"
