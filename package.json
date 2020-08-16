@@ -1,0 +1,28 @@
+{
+  "name": "localstore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "echarts": "^4.8.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1"
+  },
+  "scripts": {
+    "test": "npm test",
+    "build": "webpack",
+    "dev": "node ./build/local.build.js",
+    "production": "node ./build/production.build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webassemblydb/localstore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webassemblydb/localstore/issues"
+  },
+  "homepage": "https://github.com/webassemblydb/localstore#readme"
+}
