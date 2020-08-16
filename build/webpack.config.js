@@ -12,6 +12,11 @@ module.exports = {
             // 针对css文件使用的loader，注意有先后顺序，数组项越靠后越先执行
             { test: /\.ts$/, use: 'ts-loader' }
         ]
+    },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js' // 用 webpack 1 时需用 'vue/dist/vue.common.js'
+        }
     }
     // rules: [
     //   {

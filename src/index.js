@@ -38,6 +38,7 @@ async function initialize() {
     let questionsHtmlString = await transferToHtml({
         questions
     });
+    console.log('questionHtmlString', questionsHtmlString)
     let result = await mountQuestions({
         questionsHtmlString,
         selector: '#app'

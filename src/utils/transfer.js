@@ -3,22 +3,22 @@ import _ from 'lodash'
 const stemGenerator = {
     generate: ({
         type,
-        stem,
+        stem = [],
         extend
     }) => {
-        return `<div class="stem">${stem}</div>`
+        return `<div class="stem">${stem.join('')}</div>`
     }
 }
 
 // separate from stem?
 const questionGenerator = {
     generate: ({
-        question,
+        question = [],
         type,
         extend
     }) => {
         let tag = "div"
-        return `<${tag}, class="stem">${question}</${tag}>`
+        return `<${tag} class="stem">${question.join('')}</${tag}>`
     }
 }
 
@@ -47,7 +47,12 @@ function singleChoiceInputGenerator({
     input,
     extend,
 }) {
-    return "<el-select v-model='value' placeholder='请选择'><el-option v-for='item in options'  :key='item.value ':label='item.label' :value='item.value'> </el-option> </el-select>"
+    console.log('singleChoiceInputGenerator')
+    // return "<el-select v-model='value' placeholder='请选择'><el-option v-for='item in options'  :key='item.value ':label='item.label' :value='item.value'> </el-option> </el-select>"
+    return `<el-select placeholder='请选择'>
+            <el-option v-for='item in options' :key='item.value':label='item.label' :value='item.value'> 
+            </el-option> 
+        </el-select>`
 }
 
 function multipleChoiceInputGenerator({
@@ -55,24 +60,28 @@ function multipleChoiceInputGenerator({
     input,
     extend,
 }) {
-    return "<el-select v-model='value' placeholder='请选择'><el-option v-for='item in options'  :key='item.value ':label='item.label' :value='item.value'> </el-option> </el-select>"
+    return `<el-select placeholder='请选择'>
+        <el-option v-for='item in options'  :key='item.value':label='item.label' :value='item.value'>
+        </el-option> 
+    </el-select>`
 }
 
-const getInputGenerator = {
-    generate: ({
-        type,
-        input,
-        extend,
-    }) => {
-        switch (type) {
-            case "SingleChoice":
-                return singleChoiceInputGenerator;
-                break;
-            case "MultipleChoice":
-                return multipleChoiceInputGenerator;
-                break;
-        }
+const getInputGenerator = ({
+    type,
+    input,
+    extend,
+}) => {
+    console.log(type)
+    let generator = null
+    switch (type) {
+        case "SingleChoice":
+            generator = singleChoiceInputGenerator;
+            break;
+        case "MultipleChoice":
+            generator = multipleChoiceInputGenerator;
+            break;
     }
+    return generator
 }
 
 // singleChoice
@@ -82,26 +91,34 @@ function Strategy({
     extend,
 }) {
     let provideString = provideGenerator.generate({
+        type,
         stem,
         extend
     })
     let inputGenerator = getInputGenerator({
         type
     })
-    let inputString = inputGenerator.generate({
+    console.log('inputGenerator:', inputGenerator)
+    debugger
+    let inputString = inputGenerator({
         stem,
         type,
         extend,
     })
-    return provideString + inputString;
+    return (provideString || '') + (inputString || '');
 }
 
 function getStrategy(questionType) {
+    let strategy = null
     switch (questionType) {
         case "SingleChoice":
         case "MultipleChoice":
-            return Strategy;
+            strategy = Strategy;
+            break;
+        default: strategy = Strategy;
     }
+    console.log('stategy:', strategy)
+    return strategy
 }
 
 export async function transferToHtml({
