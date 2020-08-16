@@ -6,16 +6,39 @@
   "dependencies": {
     "echarts": "^4.8.0",
     "element-ui": "^2.13.2",
-    "vue": "^2.6.11"
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.0.2",
+    "vue-i18n": "^8.15.0",
+    "vue-property-decorator": "^8.1.0",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-pwa": "^3.8.0",
+    "@vue/cli-plugin-typescript": "^3.8.0",
+    "@vue/cli-plugin-unit-jest": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "axios": "^0.19.0",
+    "babel-core": "7.0.0-bridge.0",
+    "css-loader": "^4.2.1",
+    "style-loader": "^1.2.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "ts-jest": "^23.0.0",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.6.11",
     "webpack": "^4.44.1"
   },
   "scripts": {
     "test": "npm test",
     "build": "webpack",
     "dev": "node ./build/local.build.js",
-    "production": "node ./build/production.build.js"
+    "build:production": "node ./build/production.build.js"
   },
   "repository": {
     "type": "git",
