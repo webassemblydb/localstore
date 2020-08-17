@@ -43,25 +43,26 @@ const provideGenerator = {
 }
 
 function singleChoiceInputGenerator({
+    index,
     type,
     input,
     extend,
 }) {
     console.log('singleChoiceInputGenerator')
-    // return "<el-select v-model='value' placeholder='请选择'><el-option v-for='item in options'  :key='item.value ':label='item.label' :value='item.value'> </el-option> </el-select>"
-    return `<el-select placeholder='请选择'>
-            <el-option v-for='item in options' :key='item.value':label='item.label' :value='item.value'> 
+    return `<el-select v-model='questions[${index}].answer'  placeholder='请选择'>
+            <el-option v-for='item in questions[${index}].options' :key='item.value':label='item.label' :value='item.value'> 
             </el-option> 
         </el-select>`
 }
 
 function multipleChoiceInputGenerator({
+    index,
     type,
     input,
     extend,
 }) {
-    return `<el-select placeholder='请选择'>
-        <el-option v-for='item in options'  :key='item.value':label='item.label' :value='item.value'>
+    return `<el-select v-model='questions[${index}].answer' placeholder='请选择'>
+        <el-option v-for='item in questions[${index}].options'  :key='item.value':label='item.label' :value='item.value'>
         </el-option> 
     </el-select>`
 }
@@ -95,7 +96,9 @@ function Strategy({
         stem,
         extend
     })
+    console.log('type:',type)
     let inputGenerator = getInputGenerator({
+        index,
         type
     })
     console.log('inputGenerator:', inputGenerator)
@@ -124,8 +127,11 @@ function getStrategy(questionType) {
 export async function transferToHtml({
     questions
 }) {
-    return _.map(questions, (question) => {
-        return getStrategy(question.type)(question)
+    return _.map(questions, (question, index) => {
+        return getStrategy(question.type)({
+            ...question,
+            index
+        })
     }).join('')
 }
 

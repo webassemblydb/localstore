@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import {
+    getQuestions
+} from './questions'
 export async function mountQuestions({
     questionsHtmlString,
     selector
@@ -10,6 +13,7 @@ export async function mountQuestions({
         el: selector,
         data: function () {
             return {
+                questions: getQuestions(),
                 value: '',
                 visible: false,
                 options: [{
