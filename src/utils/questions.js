@@ -4,10 +4,10 @@ const questions = [
         stem: ["Some animals are very big; some are small"],
         question: ["what is  the biggest animal"],
         input: {
-            options: {
+            options:[ {
                 value: '选项1',
                 label: '黄金糕'
-            }
+            }]
         },
         answer: ["A"],
         extend: {}
@@ -17,10 +17,10 @@ const questions = [
         stem: ["Some animals lives in forest and some lives in sea"],
         question: ["Which animals are living in forest"],
         input: {
-            options: {
+            options: [{
                 value: '选项1',
                 label: '黄金糕'
-            }
+            }]
         },
         answer: ["A", "B", "D"],
         extend: {
