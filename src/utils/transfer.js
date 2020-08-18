@@ -68,6 +68,7 @@ function multipleChoiceInputGenerator({
 }
 
 const getInputGenerator = ({
+    index,
     type,
     input,
     extend,
@@ -85,7 +86,7 @@ const getInputGenerator = ({
     return generator
 }
 
-// singleChoice
+// 策略
 function Strategy({
     stem,
     type,
@@ -107,6 +108,7 @@ function Strategy({
         stem,
         type,
         extend,
+        index
     })
     return (provideString || '') + (inputString || '');
 }
