@@ -50,7 +50,7 @@ function singleChoiceInputGenerator({
 }) {
     console.log('singleChoiceInputGenerator')
     return `<el-select v-model='questions[${index}].answer'  placeholder='请选择'>
-            <el-option v-for='item in questions[${index}].options' :key='item.value':label='item.label' :value='item.value'> 
+            <el-option v-for='item in questions[${index}].input.options' :key='item.value':label='item.label' :value='item.value'> 
             </el-option> 
         </el-select>`
 }
@@ -62,7 +62,7 @@ function multipleChoiceInputGenerator({
     extend,
 }) {
     return `<el-select v-model='questions[${index}].answer' placeholder='请选择'>
-        <el-option v-for='item in questions[${index}].options'  :key='item.value':label='item.label' :value='item.value'>
+        <el-option v-for='item in questions[${index}].input.options'  :key='item.value':label='item.label' :value='item.value'>
         </el-option> 
     </el-select>`
 }
