@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import $ from 'jquery'
+import _ from 'lodash'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
 import {
@@ -17,6 +18,9 @@ Vue.use(ElementUI);
 $("#import").click(function(){
    $("#upload").click();//代码去触发点击
 })
+function fileUpload_onclick(){
+}
+window.fileUpload_onclick = fileUpload_onclick
 function fileUpload_onselect(){
     console.log("onselect");
     var path = $("#upload").val();//文件路径
@@ -34,6 +38,7 @@ function fileUpload_onselect(){
         console.log(pointsTxt)
     }
 }
+window.fileUpload_onselect = fileUpload_onselect
 async function initialize() {
     let questions = await getQuestions()
     let questionsHtmlString = await transferToHtml({
@@ -50,7 +55,14 @@ async function initialize() {
 }
 initialize()
 
-
+window.score = async function score() {
+    let questions = await getQuestions()
+    let score = _.sum(_.map(questions, (item) => {
+        return _.isEqual(item.correctAnswer, item.answer) ? item.score : 0
+    }))
+    console.log(questions)
+    alert(score)
+}
 // var echarts = require('echarts');
 // // 基于准备好的dom，初始化echarts实例
 // var myChart = echarts.init(document.getElementById('main'));

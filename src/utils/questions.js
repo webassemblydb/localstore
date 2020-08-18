@@ -4,12 +4,20 @@ const questions = [
         stem: ["Some animals are very big; some are small"],
         question: ["what is  the biggest animal"],
         input: {
-            options:[ {
-                value: '选项1',
-                label: '黄金糕'
-            }]
+            options: [
+                {
+                    value: 'A',
+                    label: '黄金糕'
+                },
+                {
+                    value: 'B',
+                    label: 'choclate'
+                }
+            ]
         },
-        answer: ["A"],
+        score: 5,
+        correctAnswer: "A",
+        answer: '',
         extend: {}
     },
     {
@@ -17,12 +25,28 @@ const questions = [
         stem: ["Some animals lives in forest and some lives in sea"],
         question: ["Which animals are living in forest"],
         input: {
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }]
+            options: [
+                {
+                    value: 'A',
+                    label: '黄金糕'
+                },
+                {
+                    value: 'B',
+                    label: 'chocalate'
+                },
+                {
+                    value: 'C',
+                    label: 'cool'
+                },
+                {
+                    value: 'D',
+                    label: 'dog'
+                },
+            ]
         },
-        answer: ["A", "B", "D"],
+        score: 5,
+        correctAnswer: "B",
+        answer: '',
         extend: {
         }
     }

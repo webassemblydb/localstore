@@ -88,6 +88,7 @@ const getInputGenerator = ({
 
 // 策略
 function Strategy({
+    index,
     stem,
     type,
     extend,
@@ -103,7 +104,6 @@ function Strategy({
         type
     })
     console.log('inputGenerator:', inputGenerator)
-    debugger
     let inputString = inputGenerator({
         stem,
         type,
