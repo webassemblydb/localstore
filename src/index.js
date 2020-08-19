@@ -20,7 +20,36 @@ $("#import").click(function(){
 })
 function fileUpload_onclick(){
 }
-window.fileUpload_onclick = fileUpload_onclick
+window.fileUpload_onclick = fileUpload_onclick;
+
+
+// export answers
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+window.exportAnswers = async () => {
+    let questions = await getQuestions()
+    let answers = _.map(questions, (item) => { return _.get(item, 'answer')});
+    answers = 'xxx'
+    let eleLink = document.createElement('a')
+    eleLink.donwLoad = 'answer.txt'
+    eleLink.style.display = 'none'
+    var blob = new Blob([answers])
+    eleLink.href = URL.createObjectURL(blob, {
+        type: "text/plain;charset=utf-8"
+    })
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    document.body.removeChild(eleLink)
+}
+
+// file selected
 function fileUpload_onselect(){
     console.log("onselect");
     var path = $("#upload").val();//文件路径

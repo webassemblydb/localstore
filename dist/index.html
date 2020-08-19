@@ -13,8 +13,8 @@
         <el-button>默认按钮</el-button>
     </div>
     <!-- 引入 echarts.js -->
-    <input type="button" value="导入" id="import">
-    <input type="button" value="导出" id="draw" />
+    <input type="button" value="导入" id="import" />
+    <input type="button" value="导出" id="export" onclick="exportAnswers()">
     <input type="button" value="得分" id="score" onclick="score()">
     <script src="main.js"></script>
     <input type="file" value="导入范围" id="upload" style="display:none;" onclick="return fileUpload_onclick()"
