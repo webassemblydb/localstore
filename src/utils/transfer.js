@@ -18,26 +18,31 @@ const questionGenerator = {
         extend
     }) => {
         let tag = "div"
-        return `<${tag} class="stem">${question.join('')}</${tag}>`
+        return `<${tag} class="question">${question.join('')}</${tag}>`
     }
 }
 
 const provideGenerator = {
     generate: ({
+        stem,
         question,
         type,
         extend
     }) => {
         let stemString = stemGenerator.generate({
+            stem,
             question,
             type,
             extend
         })
+        console.log('stemString:', stemString)
         let questionString = questionGenerator.generate({
+            stem,
             question,
             type,
             extend
         })
+        console.log('questionString:', questionString)
         return stemString + questionString;
     }
 }
@@ -88,12 +93,14 @@ const getInputGenerator = ({
 
 // 策略
 function Strategy({
+    question,
     index,
     stem,
     type,
     extend,
 }) {
     let provideString = provideGenerator.generate({
+        question,
         type,
         stem,
         extend
