@@ -38,7 +38,7 @@ window.exportAnswers = async () => {
     let answers = _.map(questions, (item) => { return _.get(item, 'answer')});
     answers = 'xxx'
     let eleLink = document.createElement('a')
-    eleLink.donwLoad = 'answer.txt'
+    eleLink.downLoad = 'answer.txt'
     eleLink.style.display = 'none'
     var blob = new Blob([answers])
     eleLink.href = URL.createObjectURL(blob, {
