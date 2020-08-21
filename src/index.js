@@ -36,11 +36,13 @@ function download(filename, text) {
 window.exportAnswers = async () => {
     let questions = await getQuestions()
     let answers = _.map(questions, (item) => { return _.get(item, 'answer')});
-    answers = 'xxx'
+    let answersString = JSON.stringify(answers)
+    console.log(answersString)
+    // answers = 'xxx'
     let eleLink = document.createElement('a')
-    eleLink.downLoad = 'answer.txt'
+    eleLink.download = 'answer.txt'
     eleLink.style.display = 'none'
-    var blob = new Blob([answers])
+    var blob = new Blob([answersString])
     eleLink.href = URL.createObjectURL(blob, {
         type: "text/plain;charset=utf-8"
     })
@@ -62,12 +64,28 @@ function fileUpload_onselect(){
     reader.readAsText(selectedFile);
 
     reader.onload = function(oFREvent){//读取完毕从中取值
-        var pointsTxt = oFREvent.target.result;
+        var answersString = oFREvent.target.result;
+        let answers = JSON.parse(answersString)
+        setAnswers({
+            answers
+        })
         // your code。。。。
-        console.log(pointsTxt)
+        console.log(answersString)
     }
 }
 window.fileUpload_onselect = fileUpload_onselect
+
+// set answers
+window.setAnswers = async function setAnswers ({
+    answers
+}) {
+    let questions = await getQuestions()
+    _.each(answers, (item, index) => {
+        questions[index].answer = item
+    })
+}
+
+
 async function initialize() {
     let questions = await getQuestions()
     let questionsHtmlString = await transferToHtml({
