@@ -4,6 +4,7 @@ import $ from 'jquery'
 import _ from 'lodash'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
+import * as indexedDB from './utils/indexedDB'
 
 // get questions
 import {
@@ -112,6 +113,23 @@ window.saveDraft = async function saveDraft() {
         }
     })
 }
+
+// readDraft
+window.readDraft = async function readDraft() {
+    let instance = await getInstance({
+        autoIncrement: true,
+        databaseName: 'questions',
+        tableName: 'draft',
+        version: 1
+    });
+    let answers = instance.read({
+        id: 1
+    })
+    setAnswers({
+        answers
+    })
+}
+
 
 
 
