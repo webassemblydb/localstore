@@ -1,4 +1,5 @@
 function getInstance({
+  autoIncrement,
   databaseName,
   tableName,
   version
@@ -12,7 +13,12 @@ function getInstance({
     };
     request.onupgradeneeded = function (event) {
       db = event.target.result;
-      var objectStore = db.createObjectStore(tableName, { keyPath: 'id' });
+      var objectStore;
+      if (autoIncrement) {
+        objectStore = db.createObjectStore(tableName, { autoIncrement: true });
+      } else  {
+        objectStore = db.createObjectStore(tableName, { keyPath: 'id' });
+      }
       // create index for name
       objectStore.createIndex('name', 'name', { unique: false });
       // create index for emali
@@ -82,6 +88,7 @@ function getInstance({
   })
 }
 
+window.getInstance = getInstance
 
 // add method
 function add({
@@ -201,7 +208,6 @@ function remove({
 }
 
 // remove();
-
 function readByIndex({
   indexKey,
   indexValue
@@ -226,4 +232,3 @@ function readByIndex({
 
   })
 }
-

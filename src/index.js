@@ -4,6 +4,8 @@ import $ from 'jquery'
 import _ from 'lodash'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
+
+// get questions
 import {
     getQuestions
 } from './utils/questions'
@@ -33,9 +35,16 @@ function download(filename, text) {
   element.click();
   document.body.removeChild(element);
 }
-window.exportAnswers = async () => {
+
+async function getAnswers() {
     let questions = await getQuestions()
     let answers = _.map(questions, (item) => { return _.get(item, 'answer')});
+    return answers;
+}
+
+// export answers
+window.exportAnswers = async () => {
+    let answers = await getAnswers();
     let answersString = JSON.stringify(answers)
     console.log(answersString)
     // answers = 'xxx'
@@ -84,6 +93,26 @@ window.setAnswers = async function setAnswers ({
         questions[index].answer = item
     })
 }
+
+
+// save draft
+window.saveDraft = async function saveDraft() {
+    let answers = await getAnswers();
+    let instance = await getInstance({
+        autoIncrement: true,
+        databaseName: 'questions',
+        tableName: 'draft',
+        version: 1
+    });
+    instance.add({
+        id: 1,
+        data: {
+            date: +new Date(),
+            answers
+        }
+    })
+}
+
 
 
 async function initialize() {
