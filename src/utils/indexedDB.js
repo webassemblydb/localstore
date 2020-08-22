@@ -142,22 +142,24 @@ function read({
 
 
 // read data list
-function readAll() {
+function readAll({
+  tableName
+}) {
   return new Promise((resolve, reject) => {
     var queryResult = [];
-    var objectStore = db.transaction('person').objectStore('person');
+    var objectStore = db.transaction(tableName).objectStore(tableName);
     objectStore.openCursor().onsuccess = function (event) {
       var cursor = event.target.result;
       if (cursor) {
-        //  console.log('Id: ' + cursor.key);
-        //  console.log('Name: ' + cursor.value.name);
-        //  console.log('Age: ' + cursor.value.age);
-        //  console.log('Email: ' + cursor.value.email);
+        // queryResult.push({
+        //   id: cursor.key,
+        //   name: cursor.value.name,
+        //   age: cursor.value.age,
+        //   Email: cursor.value.email
+        // });
         queryResult.push({
           id: cursor.key,
-          name: cursor.value.name,
-          age: cursor.value.age,
-          Email: cursor.value.email
+          value: cursor.value
         });
         cursor.continue();
       } else {
@@ -207,20 +209,19 @@ function remove({
 
 // remove();
 function readByIndex({
+  tableName,
   indexKey,
   indexValue
 }) {
   return new Promise((resolve, reject) => {
-    var transaction = db.transaction(['person'], 'readonly'); // 
-    var store = transaction.objectStore('person');
+    var transaction = db.transaction([tableName], 'readonly'); // 
+    var store = transaction.objectStore(tableName);
     var index = store.index(indexKey);
     var request = index.get(indexValue);
     request.onsuccess = function (e) {
       var result = e.target.result;
       if (result) {
-        console.log('Name: ' + result.name);
-        console.log('Age: ' + result.age);
-        console.log('Email: ' + result.email);
+        console.log(result)
         resolve(result);
         // ...
       } else {

@@ -51,3 +51,4 @@ example:
 
 # reference
 https://www.jianshu.com/p/0878e893c8f8
+https://stackoverflow.com/questions/21909932/indexeddb-retrieve-item-with-max-value/21911709#21911709
