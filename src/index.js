@@ -159,7 +159,7 @@ async function initialize() {
     console.log('questionHtmlString', questionsHtmlString)
     let result = await mountQuestions({
         questionsHtmlString,
-        selector: '#app'
+        selector: '#questions'
     })
     if (result) {
         console.log('successfully')
