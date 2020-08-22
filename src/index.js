@@ -130,10 +130,14 @@ window.readDraft = async function readDraft() {
     //     answers: answersStoredObj.answers
     // })
     let drafts = await instance.readAll({})
-    let draftAnswers = _.last(drafts).value.answers
-    setAnswers({
-        answers: draftAnswers
-    })
+    if (_.isEmpty(drafts)) {
+        Vue.prototype.$message('There are no drafts yet');
+    } else {
+        let draftAnswers = _.last(drafts).value.answers
+        setAnswers({
+            answers: draftAnswers
+        })
+    }
 }
 
 
