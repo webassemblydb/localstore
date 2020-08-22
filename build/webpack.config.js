@@ -1,5 +1,7 @@
-const path = require("path")
 const isProd = process.env.NODE_ENV === 'production'
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -33,7 +35,12 @@ module.exports = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js' // 用 webpack 1 时需用 'vue/dist/vue.common.js'
         }
-    }
+    },
+    plugins: [new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: 'src/index.html'
+    })],
+    
     // rules: [
     //   {
     //     test: /\.vue$/,
