@@ -131,9 +131,7 @@ function read({
 
     request.onsuccess = function (event) {
       if (request.result) {
-        console.log('Name: ' + request.result.name);
-        console.log('Age: ' + request.result.age);
-        console.log('Email: ' + request.result.email);
+        console.log(request.result)
         resolve(request.result);
       } else {
         console.log('未获得数据记录');

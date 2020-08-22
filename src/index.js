@@ -122,11 +122,12 @@ window.readDraft = async function readDraft() {
         tableName: 'draft',
         version: 1
     });
-    let answers = instance.read({
-        id: 1
+    let answersStoredObj = await instance.read({
+        id: 10
     })
+    console.log(answersStoredObj.answers)
     setAnswers({
-        answers
+        answers: answersStoredObj.answers
     })
 }
 
