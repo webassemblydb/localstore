@@ -5,6 +5,7 @@ import _ from 'lodash'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
 import * as indexedDB from './utils/indexedDB'
+import App from './components/App.vue'
 
 // get questions
 import {
@@ -17,6 +18,13 @@ import {
     mountQuestions
 } from './utils/mount'
 Vue.use(ElementUI);
+
+
+new Vue({
+//   router,
+//   store,
+  render: (h) => h(App),
+}).$mount('#app');
 
 $("#import").click(function(){
    $("#upload").click();//代码去触发点击

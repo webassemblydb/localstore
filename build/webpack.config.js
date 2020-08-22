@@ -11,6 +11,30 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    compilerOptions: {
+                        preserveWhitespace: false
+                    }
+                }
+            },
+            {
+                test: /\.styl(us)?$/,
+                use: isProd
+                    ? ExtractTextPlugin.extract({
+                        use: [
+                            {
+                                loader: 'css-loader',
+                                options: { minimize: true }
+                            },
+                            'stylus-loader'
+                        ],
+                        fallback: 'vue-style-loader'
+                    })
+                    : ['vue-style-loader', 'css-loader', 'stylus-loader']
+            },
+            {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
                 // exclude: /node_modules/
@@ -63,21 +87,6 @@ module.exports = {
     //       limit: 10000,
     //       name: '[name].[ext]?[hash]'
     //     }
-    //   },
-    //   {
-    //     test: /\.styl(us)?$/,
-    //     use: isProd
-    //       ? ExtractTextPlugin.extract({
-    //           use: [
-    //             {
-    //               loader: 'css-loader',
-    //               options: { minimize: true }
-    //             },
-    //             'stylus-loader'
-    //           ],
-    //           fallback: 'vue-style-loader'
-    //         })
-    //       : ['vue-style-loader', 'css-loader', 'stylus-loader']
     //   },
     // ]
 };
