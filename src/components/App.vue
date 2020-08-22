@@ -5,10 +5,13 @@
     </div> -->
     <input type="button" value="导入" id="import" />
     <input type="button" value="导出" id="export" onclick="exportAnswers()">
+    <input type="button" value="导出questions" id="export" onclick="exportQuestions()">
     <input type="button" value="草稿" id="draft" onclick="saveDraft()">
     <input type="button" value="读草稿" id="draft" onclick="readDraft()">
+    <!-- hidden import file -->
     <input type="file" value="导入范围" id="upload" style="display:none;" onclick="return fileUpload_onclick()"
         onchange="return fileUpload_onselect()" />
+    <input type="file" value="导入questions" id="questions_importer" onchange="return importQuestions()" />
     <el-button @click="score">得分</el-button>
     <div id='questions'>
 

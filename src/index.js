@@ -9,7 +9,8 @@ import App from './components/App.vue'
 
 // get questions
 import {
-    getQuestions
+    getQuestions,
+    setQuestions
 } from './utils/questions'
 import {
    transferToHtml 
@@ -51,6 +52,22 @@ async function getAnswers() {
     return answers;
 }
 
+// export questions
+window.exportQuestions = async () => {
+    let questions = await getQuestions();
+    let questionsStrigify = JSON.stringify(questions)
+    let eleLink = document.createElement('a')
+    eleLink.download = 'questions.txt'
+    eleLink.style.display = 'none'
+    var blob = new Blob([questionsStrigify])
+    eleLink.href = URL.createObjectURL(blob, {
+        type: "text/plain;charset=utf-8"
+    })
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    document.body.removeChild(eleLink)
+}
+
 // export answers
 window.exportAnswers = async () => {
     let answers = await getAnswers();
@@ -69,7 +86,28 @@ window.exportAnswers = async () => {
     document.body.removeChild(eleLink)
 }
 
+function importQuestions(){
+    var selectedFile = document.getElementById("questions_importer").files[0];
+    var name = selectedFile.name;//读取选中文件的文件名
+    var size = selectedFile.size;//读取选中文件的大小
+    console.log("wenjianming:"+name+"daxiao:"+size);
+    var reader = new FileReader();//这是核心！！读取操作都是由它完成的
+    reader.readAsText(selectedFile);
+    reader.onload = function(oFREvent){//读取完毕从中取值
+        var questionsString = oFREvent.target.result;
+        let questions = JSON.parse(questionsString)
+        console.log(questions)
+        setQuestions({
+            questions
+        })
+        initialize()
+        // your code。。。。
+    }
+}
+window.importQuestions = importQuestions
+
 // file selected
+// import answers
 function fileUpload_onselect(){
     console.log("onselect");
     var path = $("#upload").val();//文件路径
@@ -130,13 +168,6 @@ window.readDraft = async function readDraft() {
         tableName: 'draft',
         version: 1
     });
-    // let answersStoredObj = await instance.read({
-    //     id: 10
-    // })
-    // console.log(answersStoredObj.answers)
-    // setAnswers({
-    //     answers: answersStoredObj.answers
-    // })
     let drafts = await instance.readAll({})
     if (_.isEmpty(drafts)) {
         Vue.prototype.$message('There are no drafts yet');
@@ -156,6 +187,7 @@ async function initialize() {
     let questionsHtmlString = await transferToHtml({
         questions
     });
+    
     console.log('questionHtmlString', questionsHtmlString)
     let result = await mountQuestions({
         questionsHtmlString,
