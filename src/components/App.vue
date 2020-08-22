@@ -5,7 +5,7 @@
     </div> -->
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="stem">
-        <el-input v-model="question.name"></el-input>
+        <el-input v-model="question.stem"></el-input>
       </el-form-item>
       <el-form-item label="question">
         <el-input v-model="question.question"></el-input>

@@ -1,12 +1,16 @@
 import _ from 'lodash'
-
 const stemGenerator = {
     generate: ({
         type,
         stem = [],
         extend
     }) => {
-        return `<div class="stem">${stem.join('')}</div>`
+        if (_.isString(stem)) {
+            return `<div class="stem">${stem}</div>`
+
+        } else {
+            return `<div class="stem">${stem.join('')}</div>`
+        }
     }
 }
 
@@ -18,7 +22,11 @@ const questionGenerator = {
         extend
     }) => {
         let tag = "div"
-        return `<${tag} class="question">${question.join('')}</${tag}>`
+        if (_.isString(question)) {
+            return `<${tag} class="question">${question}</${tag}>`
+        } else {
+            return `<${tag} class="question">${question.join('')}</${tag}>`
+        }
     }
 }
 
