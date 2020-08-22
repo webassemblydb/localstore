@@ -10,7 +10,7 @@ const watching = compiler.watch({
         ignore: /node_modules/,
         //     监听到变化等待300ms 再去执行文件防止文件更新太快导致编译频繁
         //     默认300ms
-        aggregateTimeout: 300,
+        aggregateTimeout: 500,
         //     判断文件是否发生变化是通过不停地询问系统指定文件有没有变化实现的
         poll: 1000
     },
