@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import ElementUI from 'element-ui';
 import $ from 'jquery'
 import _ from 'lodash'
@@ -8,8 +9,10 @@ import * as indexedDB from './utils/indexedDB'
 import App from './components/App.vue'
 import { router } from './router'
 import VueRouter from 'vue-router'
+import { store } from './store'
 
 Vue.use(VueRouter) // install
+Vue.use(Vuex)
 
 // get questions
 import {
@@ -27,7 +30,7 @@ Vue.use(ElementUI);
 
 new Vue({
   router,
-//   store,
+  store,
   render: (h) => h(App),
 }).$mount('#app');
 

@@ -104,3 +104,4 @@ dist/*.js
 .tern-port
 dist/*.woff
 dist/*.ttf
+*.js~
