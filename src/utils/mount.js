@@ -7,16 +7,21 @@ export async function mountQuestions({
     selector
 }) {
     // questionsHtmlString = '<el-button>good</el-button>'
-    document.querySelector(selector).innerHTML = questionsHtmlString
-    window.Vue = Vue
-    let questions = await getQuestions()
-    new Vue({
-        el: selector,
-        data: function () {
-            return {
-                questions
+    let node = document.querySelector(selector)
+    if (!node) {
+        return false
+    } else {
+        node.innerHTML = questionsHtmlString
+        window.Vue = Vue
+        let questions = await getQuestions()
+        new Vue({
+            el: selector,
+            data: function () {
+                return {
+                    questions
+                }
             }
-        }
-    })
-    return true
+        })
+        return true
+    }
 }

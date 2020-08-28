@@ -6,6 +6,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
 import * as indexedDB from './utils/indexedDB'
 import App from './components/App.vue'
+import { router } from './router'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter) // install
 
 // get questions
 import {
@@ -22,7 +26,7 @@ Vue.use(ElementUI);
 
 
 new Vue({
-//   router,
+  router,
 //   store,
   render: (h) => h(App),
 }).$mount('#app');

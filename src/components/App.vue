@@ -41,6 +41,9 @@
     <div id='questions'>
 
     </div>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <router-view></router-view>
     <!-- 引入 echarts.js -->
     <div id="main" style="width: 600px;height:400px;"></div>
   </div>
