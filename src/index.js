@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
 import * as indexedDB from './utils/indexedDB'
 import App from './components/App.vue'
+import Main from './components/Main.vue'
 import { router } from './router'
 import VueRouter from 'vue-router'
 import vueI18n from 'vue-i18n'
@@ -33,15 +34,15 @@ Vue.use(ElementUI);
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: (h) => h(Main),
 }).$mount('#app');
 
-$("#import").click(function(){
-   $("#upload").click();//代码去触发点击
-})
-function fileUpload_onclick(){
-}
-window.fileUpload_onclick = fileUpload_onclick;
+// $("#import").click(function(){
+//    $("#upload").click();//代码去触发点击
+// })
+// function fileUpload_onclick(){
+// }
+// window.fileUpload_onclick = fileUpload_onclick;
 
 
 // export answers
@@ -53,6 +54,12 @@ function download(filename, text) {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+}
+
+async function getCorrectAnswers() {
+    let questions = await getQuestions()
+    let answers = _.map(questions, (item) => { return _.get(item, 'correctAnswer')});
+    return answers;
 }
 
 async function getAnswers() {
@@ -82,9 +89,25 @@ window.exportAnswers = async () => {
     let answers = await getAnswers();
     let answersString = JSON.stringify(answers)
     console.log(answersString)
-    // answers = 'xxx'
     let eleLink = document.createElement('a')
     eleLink.download = 'answer.txt'
+    eleLink.style.display = 'none'
+    var blob = new Blob([answersString])
+    eleLink.href = URL.createObjectURL(blob, {
+        type: "text/plain;charset=utf-8"
+    })
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    document.body.removeChild(eleLink)
+}
+
+// export answers
+window.exportCorrectAnswers = async () => {
+    let answers = await getCorrectAnswers();
+    let answersString = JSON.stringify(answers)
+    console.log(answersString)
+    let eleLink = document.createElement('a')
+    eleLink.download = 'correctAnswer.txt'
     eleLink.style.display = 'none'
     var blob = new Blob([answersString])
     eleLink.href = URL.createObjectURL(blob, {
