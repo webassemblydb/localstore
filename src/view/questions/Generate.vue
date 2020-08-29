@@ -2,9 +2,9 @@
 <template>
   <div id="app">
     <el-button @click="exportQuestions">导出试卷</el-button>
-    <el-button @click="exportAnswers">导出答案</el-button>
-    <!-- <input type="button" value="导出试卷" id="export" onclick="exportQuestions()">
-    <input type="button" value="导出答案" id="export" onclick="exportAnswers()"> -->
+    <el-button @click="exportCorrectAnswers">导出答案</el-button>
+    <el-button @click="saveDraftQuestions">暂存试卷</el-button>
+    <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
     <div>
       <label for="uploadAnswers">选择答案文件:</label>
       <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
@@ -108,11 +108,47 @@ export default {
         questions: this.questions
       })
     },
+    // 导出试卷
     exportQuestions (){
       return window.exportQuestions()
     },
-    exportAnswers() {
+    // 导出答案
+    exportCorrectAnswers() {
       return window.exportCorrectAnswers()
+    },
+    async saveDraftQuestions() {
+      let instance = await getInstance({
+          autoIncrement: true,
+          databaseName: 'Questions',
+          tableName: 'draftQuestions',
+          version: 1
+      })
+      instance.add({
+          id: 1,
+          data: {
+              date: +new Date(),
+              questions: this.questions
+          }
+      })
+    },
+    // 获取暂存的问题
+    async readDraftQuestions() {
+      let instance = await getInstance({
+          autoIncrement: true,
+          databaseName: 'Questions',
+          tableName: 'draftQuestions',
+          version: 1
+      });
+      let drafts = await instance.readAll({})
+      if (_.isEmpty(drafts)) {
+          Vue.prototype.$message('There are no drafts yet');
+      } else {
+          let draftQuestions = _.last(drafts).value.questions
+          await setQuestions({
+              questions: draftQuestions
+          })
+          this.questions = draftQuestions
+      }
     }
   },
   mounted () {
