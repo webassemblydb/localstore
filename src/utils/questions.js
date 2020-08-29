@@ -1,9 +1,10 @@
 
 var questionsCache = [
 ]
+
 export const getQuestions = async () => {
     let _questions = []
-    return questionsCache;
+    return questionsCache
 }
 
 export const setQuestions = async ({

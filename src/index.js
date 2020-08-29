@@ -9,10 +9,12 @@ import * as indexedDB from './utils/indexedDB'
 import App from './components/App.vue'
 import { router } from './router'
 import VueRouter from 'vue-router'
+import vueI18n from 'vue-i18n'
 import { store } from './store'
 
 Vue.use(VueRouter) // install
 Vue.use(Vuex)
+Vue.use(vueI18n)
 
 // get questions
 import {
@@ -93,18 +95,18 @@ window.exportAnswers = async () => {
     document.body.removeChild(eleLink)
 }
 
-function importQuestions(){
+async function importQuestions(){
     var selectedFile = document.getElementById("questions_importer").files[0];
     var name = selectedFile.name;//读取选中文件的文件名
     var size = selectedFile.size;//读取选中文件的大小
     console.log("wenjianming:"+name+"daxiao:"+size);
     var reader = new FileReader();//这是核心！！读取操作都是由它完成的
     reader.readAsText(selectedFile);
-    reader.onload = function(oFREvent){//读取完毕从中取值
+    reader.onload = async function(oFREvent){//读取完毕从中取值
         var questionsString = oFREvent.target.result;
         let questions = JSON.parse(questionsString)
         console.log(questions)
-        setQuestions({
+        await setQuestions({
             questions
         })
         initialize()
@@ -117,9 +119,9 @@ window.importQuestions = importQuestions
 // import answers
 function fileUpload_onselect(){
     console.log("onselect");
-    var path = $("#upload").val();//文件路径
+    var path = $("#uploadAnswers").val();//文件路径
     console.log(path);
-    var selectedFile = document.getElementById("upload").files[0];
+    var selectedFile = document.getElementById("uploadAnswers").files[0];
     var name = selectedFile.name;//读取选中文件的文件名
     var size = selectedFile.size;//读取选中文件的大小
     console.log("wenjianming:"+name+"daxiao:"+size);
@@ -142,9 +144,18 @@ window.fileUpload_onselect = fileUpload_onselect
 window.setAnswers = async function setAnswers ({
     answers
 }) {
-    let questions = await getQuestions()
-    _.each(answers, (item, index) => {
-        questions[index].answer = item
+    let questions = await getQuestions() 
+    console.log('fetched questions:', questions)
+    _.each(answers, (answer, index) => {
+        if (!answer) {
+            console.error('answer item error', answer)
+        } else {
+            if (questions[index]) {
+                questions[index].answer = answer
+            } else {
+                console.error('there is no specific question')
+            }
+        }
     })
 }
 
@@ -186,25 +197,24 @@ window.readDraft = async function readDraft() {
     }
 }
 
-
-
-
 async function initialize() {
+    console.log('initialize.....')
     let questions = await getQuestions()
     let questionsHtmlString = await transferToHtml({
         questions
     });
-    
-    console.log('questionHtmlString', questionsHtmlString)
+    console.log('questionHtmlString:', questionsHtmlString)
     let result = await mountQuestions({
         questionsHtmlString,
         selector: '#questions'
     })
     if (result) {
         console.log('successfully')
+    } else {
+        console.error(result)
     }
 }
-initialize()
+// initialize()
 
 window.score = async function score() {
     let questions = await getQuestions()

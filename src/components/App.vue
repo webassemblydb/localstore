@@ -3,7 +3,8 @@
     <!-- <div id="nav">
       <el-button>按钮</el-button>
     </div> -->
-    <el-form ref="form" :model="form" label-width="80px">
+    <!-- <router-view></router-view> -->
+    <!-- <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="stem">
         <el-input v-model="question.stem"></el-input>
       </el-form-item>
@@ -26,18 +27,26 @@
         <el-input v-model="question.input.options[3].label"></el-input>
         <el-input v-model="question.input.options[3].value"></el-input>
       </el-form-item>
-  </el-form>
-    <el-button @click="addItem">add</el-button>
-    <input type="button" value="导入" id="import" />
-    <input type="button" value="导出" id="export" onclick="exportAnswers()">
-    <input type="button" value="导出questions" id="export" onclick="exportQuestions()">
-    <input type="button" value="草稿" id="draft" onclick="saveDraft()">
-    <input type="button" value="读草稿" id="draft" onclick="readDraft()">
-    <!-- hidden import file -->
-    <input type="file" value="导入范围" id="upload" style="display:none;" onclick="return fileUpload_onclick()"
-        onchange="return fileUpload_onselect()" />
-    <input type="file" value="导入questions" id="questions_importer" onchange="return importQuestions()" />
+  </el-form> -->
+    <el-button @click="generateQuestions">生成试卷</el-button>
+    <el-button @click="makeAnswers">回答问题</el-button>
+    <el-button @click="addItem">新增问题</el-button>
     <el-button @click="score">得分</el-button>
+    <input type="button" value="存草稿" id="draft" onclick="saveDraft()">
+    <input type="button" value="读草稿" id="draft" onclick="readDraft()">
+    <input type="button" value="导出试卷" id="export" onclick="exportQuestions()">
+    <input type="button" value="导出答案" id="export" onclick="exportAnswers()">
+    <!-- hidden import file -->
+    <div>
+      <label for="uploadAnswers">选择答案文件:</label>
+      <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
+          onchange="return fileUpload_onselect()" />
+    </div>
+    <div>
+      <label for="questions_importer">选择问题文件:</label>
+      <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
+    </div>
+
     <div id='questions'>
 
     </div>
@@ -60,39 +69,40 @@ export default {
   name: 'App',
   data() {
     return {
-      questions: [],
-      question: {
-        type: "SingleChoice",
-        stem: ["Some animals are very big; some are small"],
-        question: ["what is  the biggest animal"],
-        input: {
-            options: [
-                {
-                    value: 'A',
-                    label: '黄金糕'
-                },
-                {
-                    value: 'B',
-                    label: 'choclate'
-                },
-                {
-                    value: 'C',
-                    label: 'choclate'
-                },
-                {
-                    value: 'C',
-                    label: 'choclate'
-                }
-            ]
-        },
-        score: 5,
-        correctAnswer: "A",
-        answer: '',
-        extend: {}
-    },
+    //   questions: [],
+    //   question: {
+    //     type: "SingleChoice",
+    //     stem: ["Some animals are very big; some are small"],
+    //     question: ["what is  the biggest animal"],
+    //     input: {
+    //         options: [
+    //             {
+    //                 value: 'A',
+    //                 label: '黄金糕'
+    //             },
+    //             {
+    //                 value: 'B',
+    //                 label: 'choclate'
+    //             },
+    //             {
+    //                 value: 'C',
+    //                 label: 'choclate'
+    //             },
+    //             {
+    //                 value: 'C',
+    //                 label: 'choclate'
+    //             }
+    //         ]
+    //     },
+    //     score: 5,
+    //     correctAnswer: "A",
+    //     answer: '',
+    //     extend: {}
+    // },
     }
   },
   methods: {
+    // 新增问题
     addItem () {
       this.questions.push(this.question)
       console.log(this.question)
@@ -101,6 +111,7 @@ export default {
         questions: this.questions
       })
     },
+    // 获取总分
     async getSum () {
       let questions = await getQuestions()
       console.log(questions)
@@ -111,12 +122,14 @@ export default {
       alert(score)
       return score
     },
+    // 获取分数
     async score () {
       let score = await window.score();
       this.showScore({
         score
       });
     },
+    // 显示分数
     async showScore ({
       score
     }) {
