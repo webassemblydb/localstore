@@ -61,6 +61,9 @@ import {
     getQuestions, 
     setQuestions
 } from '@questions/utils/questions'
+import {
+  initialize
+} from '@questions/utils/initialize'
 export default {
   name: 'GenerateQuestions',
     data() {
@@ -144,10 +147,12 @@ export default {
           Vue.prototype.$message('There are no drafts yet');
       } else {
           let draftQuestions = _.last(drafts).value.questions
+          console.log(draftQuestions)
           await setQuestions({
               questions: draftQuestions
           })
           this.questions = draftQuestions
+          initialize()
       }
     }
   },
