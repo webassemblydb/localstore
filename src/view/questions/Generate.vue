@@ -64,6 +64,7 @@ import {
 import {
   initialize
 } from '@questions/utils/initialize'
+import Vue from 'vue';
 export default {
   name: 'GenerateQuestions',
     data() {
@@ -148,10 +149,12 @@ export default {
       } else {
           let draftQuestions = _.last(drafts).value.questions
           console.log(draftQuestions)
+          // 设置问题列表
           await setQuestions({
               questions: draftQuestions
           })
           this.questions = draftQuestions
+          window.draftQuestions= draftQuestions
           initialize()
       }
     }
