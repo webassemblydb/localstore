@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <el-button @click="exportQuestions">导出试卷</el-button>
+    <el-button @click="exportQuestions">{{$t('exportQuestion')}}(</el-button>
     <el-button @click="exportCorrectAnswers">导出答案</el-button>
     <el-button @click="saveDraftQuestions">暂存试卷</el-button>
     <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
@@ -56,6 +56,9 @@
 
 <script>
 import _ from 'lodash'
+import {
+  i18n
+} from './i18n'
 // 基于准备好的dom，初始化echarts实例
 import {
     getQuestions, 
@@ -66,6 +69,7 @@ import {
 } from '@questions/utils/initialize'
 import Vue from 'vue';
 export default {
+  i18n,
   name: 'GenerateQuestions',
     data() {
         return {

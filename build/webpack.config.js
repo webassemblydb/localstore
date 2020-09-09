@@ -4,6 +4,7 @@ var path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
+    devtool: 'source-map', // SourceMap
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, '../dist'),
