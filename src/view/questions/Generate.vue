@@ -109,7 +109,7 @@ export default {
   methods: {
     // 新增问题
     addItem () {
-      this.questions.push(this.question)
+      this.questions.push(_.cloneDeep(this.question)) // deep copy into
       console.log(this.question)
       console.log(this.questions)
       setQuestions({

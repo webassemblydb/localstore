@@ -105,3 +105,4 @@ dist/*.js
 dist/*.woff
 dist/*.ttf
 *.js~
+*.map

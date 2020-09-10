@@ -1,5 +1,6 @@
 import VueI18n from 'vue-i18n'
-Vue.use(vueI18n)
+import Vue from 'vue';
+Vue.use(VueI18n)
 const messages = {
     en: {
         exportQuestion: "export question"
