@@ -66,7 +66,7 @@ export default {
       let score = _.sum(_.map(questions, (item) => {
           return item.score 
       }))
-      alert(score)
+      // alert(score)
       return score
     },
     // 获取分数

@@ -245,6 +245,6 @@ window.score = async function score() {
         return _.isEqual(item.correctAnswer, item.answer) ? item.score : 0
     }))
     console.log(questions)
-    alert(score)
+    // alert(score)
     return score
 }
