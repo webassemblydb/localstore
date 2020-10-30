@@ -12,7 +12,7 @@ export async function mountQuestions({
         return false
     } else {
         node.innerHTML = questionsHtmlString
-        window.Vue = Vue
+        // window.Vue = Vue
         let questions = await getQuestions()
         new Vue({
             el: selector,

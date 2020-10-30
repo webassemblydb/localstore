@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <el-button @click="exportQuestions">{{$t('exportQuestion')}}(</el-button>
+    <el-button @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
     <el-button @click="exportCorrectAnswers">导出答案</el-button>
     <el-button @click="saveDraftQuestions">暂存试卷</el-button>
     <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
@@ -47,6 +47,13 @@
   </el-form>
     <el-button @click="addItem">新增问题</el-button>
     <div id='questions'>
+      <div v-for="(question, index) in questions">
+      <el-select v-model='question.answer'  placeholder='请选择'>
+              <el-option v-for='item in question.input.options' :key='item.value':label='item.label' :value='item.value'> 
+              </el-option> 
+          </el-select>
+        <span v-if="question.correctAnswer" label="D">正确答案： {{question.correctAnswer}}</span>
+      </div>
     </div>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
