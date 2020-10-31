@@ -13,7 +13,8 @@ body {
     color: #1E88C7;
     text-decoration: none;
     text-indent: 0;
-    line-height: 20px;
+    line-height: 30px;
+    vertical-align: middle;
 }
 .file input {
     position: absolute;

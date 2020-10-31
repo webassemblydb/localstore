@@ -3,16 +3,25 @@
   <div id="app">
     <el-row>
     <el-col :span="12">
-      <el-button @click="addItem">新增问题</el-button>
-      <el-button @click="saveDraftQuestions">暂存试卷</el-button>
-      <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
-      <a href="javascript:;" class="file">选择答案文件:
-        <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
-            onchange="return fileUpload_onselect()" />
-      </a>
-      <a href="javascript:;" class="file">选择问题文件
-        <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
-      </a>
+      <el-row class="row-bg">
+        <el-col :span="6">
+          <el-button @click="addItem">新增问题</el-button>
+        </el-col>
+        <el-col :span="18">
+          <el-row type="flex" class="row-bg" justify="end">
+            <el-col :span="24">
+              <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
+              <a href="javascript:;" class="file">选择答案文件:
+                <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
+                    onchange="return fileUpload_onselect()" />
+              </a>
+              <a href="javascript:;" class="file">选择问题文件
+                <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
+              </a>
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="问题背景">
           <el-input v-model="question.stem"></el-input>
@@ -47,7 +56,9 @@
 
     <el-col :span="12">
       <el-button @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
+      <el-button @click="exportQuestionsWithAnswers">{{$t('exportQuestionsWithAnswers')}}</el-button>
       <el-button @click="exportCorrectAnswers">导出答案</el-button>
+      <el-button @click="saveDraftQuestions">暂存试卷</el-button>
       <div id='questions'>
         <div v-for="(question, index) in questions">
         <el-select v-model='question.answer'  placeholder='请选择'>
@@ -129,7 +140,15 @@ export default {
     },
     // 导出试卷
     exportQuestions (){
-      return window.exportQuestions()
+      return window.exportQuestions({
+        isIncludeAnswers: false
+      })
+    },
+    // 导出试卷和答案
+    exportQuestionsWithAnswers (){
+      return window.exportQuestions({
+        isIncludeAnswers: true
+      })
     },
     // 导出答案
     exportCorrectAnswers() {

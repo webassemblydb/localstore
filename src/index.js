@@ -68,9 +68,23 @@ async function getAnswers() {
     return answers;
 }
 
+// 删除问题中的答案
+function removeAnswers(questions) {
+    let questionsCopy = _.cloneDeep(questions)
+    _.each(questionsCopy, (item) => { item.correctAnswer = '' });
+    return questionsCopy;
+}
+
+
 // export questions
-window.exportQuestions = async () => {
+window.exportQuestions = async ({
+    isIncludeAnswers,
+    fileName
+}) => {
     let questions = await getQuestions();
+    if (!isIncludeAnswers) {
+        questions = removeAnswers(questions)
+    }
     let questionsStrigify = JSON.stringify(questions)
     let eleLink = document.createElement('a')
     eleLink.download = 'questions.txt'
@@ -118,6 +132,7 @@ window.exportCorrectAnswers = async () => {
     document.body.removeChild(eleLink)
 }
 
+// 导入问题文件
 async function importQuestions(){
     var selectedFile = document.getElementById("questions_importer").files[0];
     var name = selectedFile.name;//读取选中文件的文件名

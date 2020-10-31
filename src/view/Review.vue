@@ -22,7 +22,7 @@
     </el-col>
     <el-col :span="12">
       <!-- 引入 echarts.js -->
-      <div id="main" style="width: 600px;height:400px;"></div>
+      <div id="main" style="width: 600px;height:400px;" v-if='isScoreVisible'></div>
       <div id='questions'>
       </div>
       <!-- 路由出口 -->
@@ -46,6 +46,7 @@ export default {
   name: 'App',
   data() {
     return {
+      isScoreVisible: false
     }
   },
   methods: {
@@ -71,25 +72,28 @@ export default {
     async showScore ({
       score
     }) {
-      let sum = await this.getSum();
-      var myChart = echarts.init(document.getElementById('main'));
-      console.log(score)
-      console.log(sum)
-      myChart.setOption({
-          title: {
-              text: '分'
-          },
-          tooltip: {},
-          xAxis: {
-              data: ['得分', '扣分']
-          },
-          yAxis: {},
-          series: [{
-              name: '分',
-              type: 'bar',
-              data: [score, sum - score]
-          }]
-      });
+      let sum = await this.getSum()
+      this.isScoreVisible = true
+      this.$nextTick(function(){
+        var myChart = echarts.init(document.getElementById('main'))
+        console.log(score)
+        console.log(sum)
+        myChart.setOption({
+            title: {
+                text: '分'
+            },
+            tooltip: {},
+            xAxis: {
+                data: ['得分', '扣分']
+            },
+            yAxis: {},
+            series: [{
+                name: '分',
+                type: 'bar',
+                data: [score, sum - score]
+            }]
+        })
+      })
     }
   },
   mounted () {

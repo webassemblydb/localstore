@@ -18,7 +18,7 @@ const watching = compiler.watch({
     aggregateTimeout: 300
 }, (err, stats) => {
     if (err || stats.hasErrors()) {
-        console.log(stats);
+        console.log(err);
         console.log("构建过程出错！");
     } else {
         console.log("实时构建成功！" + new Date());
