@@ -87,7 +87,7 @@ window.exportQuestions = async ({
     }
     let questionsStrigify = JSON.stringify(questions)
     let eleLink = document.createElement('a')
-    eleLink.download = 'questions.txt'
+    eleLink.download = fileName || 'questions.txt'
     eleLink.style.display = 'none'
     var blob = new Blob([questionsStrigify])
     eleLink.href = URL.createObjectURL(blob, {
