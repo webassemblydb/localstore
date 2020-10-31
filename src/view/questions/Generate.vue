@@ -26,22 +26,22 @@
         <el-form-item label="问题背景">
           <el-input v-model="question.stem"></el-input>
         </el-form-item>
-        <el-form-item label="question">
+        <el-form-item :label="$t('questionDescription')">
           <el-input v-model="question.question"></el-input>
         </el-form-item>
-        <el-form-item label="option one">
+        <el-form-item :label="$t('optionFirst')">
           <el-input v-model="question.input.options[0].label"></el-input>
           <el-input v-model="question.input.options[0].value"></el-input>
         </el-form-item>
-        <el-form-item label="option two">
+        <el-form-item :label="$t('optionSecond')">
           <el-input v-model="question.input.options[1].label"></el-input>
           <el-input v-model="question.input.options[1].value"></el-input>
         </el-form-item>
-        <el-form-item label="option three">
+        <el-form-item :label="$t('optionThird')">
           <el-input v-model="question.input.options[2].label"></el-input>
           <el-input v-model="question.input.options[2].value"></el-input>
         </el-form-item>
-        <el-form-item label="选项4">
+        <el-form-item :label="$t('optionFourth')">
           <el-input v-model="question.input.options[3].label"></el-input>
           <el-input v-model="question.input.options[3].value"></el-input>
         </el-form-item>
@@ -99,30 +99,30 @@ export default {
             questions: [],
             question: {
                 type: "SingleChoice",
-                stem: ["Some animals are very big; some are small"],
-                question: ["what is  the biggest animal"],
+                stem: ["世界是五彩缤纷的"],
+                question: ["什么是黄色的"],
                 input: {
                     options: [
                         {
                             value: 'A',
-                            label: '黄金糕'
+                            label: '蓝天'
                         },
                         {
                             value: 'B',
-                            label: 'choclate'
+                            label: '白云'
                         },
                         {
                             value: 'C',
-                            label: 'choclate'
+                            label: '枫叶'
                         },
                         {
                             value: 'D',
-                            label: 'choclate'
+                            label: '香蕉皮'
                         }
                     ]
                 },
                 score: 5,
-                correctAnswer: "A",
+                correctAnswer: "D",
                 answer: '',
                 extend: {}
             }

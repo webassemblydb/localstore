@@ -4,21 +4,13 @@
     <el-row>
      <el-col :span="12"> 
     <!-- <div> -->
-      <a href="javascript:;" class="file">选择问题文件
-      <!-- <label for="questions_importer">选择问题文件:</label> -->
+      <a href="javascript:;" class="file">选择包含答案的问题文件
         <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
       </a>
-    <!-- </div> -->
-    <!-- <div> -->
       <a href="javascript:;" class="file">选择答案文件
-      <!-- <label for="questions_importer">选择问题文件:</label> -->
-        <!-- <label for="uploadAnswers">选择答案文件:</label> -->
         <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()" onchange="return fileUpload_onselect()" />
       </a>
-    <!-- </div> -->
-    <!-- <div> -->
       <el-button @click="score">查看得分</el-button>
-    <!-- </div> -->
     </el-col>
     <el-col :span="12">
       <!-- 引入 echarts.js -->
