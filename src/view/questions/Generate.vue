@@ -147,7 +147,8 @@ export default {
     // 导出试卷和答案
     exportQuestionsWithAnswers (){
       return window.exportQuestions({
-        isIncludeAnswers: true
+        isIncludeAnswers: true,
+        fileName:'questionsWithAnswers'
       })
     },
     // 导出答案
