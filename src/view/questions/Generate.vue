@@ -1,60 +1,64 @@
 
 <template>
   <div id="app">
-    <el-button @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
-    <el-button @click="exportCorrectAnswers">导出答案</el-button>
-    <el-button @click="saveDraftQuestions">暂存试卷</el-button>
-    <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
-    <div>
-      <label for="uploadAnswers">选择答案文件:</label>
-      <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
-          onchange="return fileUpload_onselect()" />
-    </div>
-    <div>
-      <label for="questions_importer">选择问题文件:</label>
-      <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
-    </div>
-        setting{{count}}
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="问题背景">
-        <el-input v-model="question.stem"></el-input>
-      </el-form-item>
-      <el-form-item label="question">
-        <el-input v-model="question.question"></el-input>
-      </el-form-item>
-      <el-form-item label="option one">
-        <el-input v-model="question.input.options[0].label"></el-input>
-        <el-input v-model="question.input.options[0].value"></el-input>
-      </el-form-item>
-      <el-form-item label="option two">
-        <el-input v-model="question.input.options[1].label"></el-input>
-        <el-input v-model="question.input.options[1].value"></el-input>
-      </el-form-item>
-      <el-form-item label="option three">
-        <el-input v-model="question.input.options[2].label"></el-input>
-        <el-input v-model="question.input.options[2].value"></el-input>
-      </el-form-item>
-      <el-form-item label="选项4">
-        <el-input v-model="question.input.options[3].label"></el-input>
-        <el-input v-model="question.input.options[3].value"></el-input>
-      </el-form-item>
-      <el-form-item label="答案">
-        <el-radio v-model="question.correctAnswer" label="A">A</el-radio>
-        <el-radio v-model="question.correctAnswer" label="B">B</el-radio>
-        <el-radio v-model="question.correctAnswer" label="C">C</el-radio>
-        <el-radio v-model="question.correctAnswer" label="D">D</el-radio>
-      </el-form-item>
-  </el-form>
-    <el-button @click="addItem">新增问题</el-button>
-    <div id='questions'>
-      <div v-for="(question, index) in questions">
-      <el-select v-model='question.answer'  placeholder='请选择'>
-              <el-option v-for='item in question.input.options' :key='item.value':label='item.label' :value='item.value'> 
-              </el-option> 
-          </el-select>
-        <span v-if="question.correctAnswer" label="D">正确答案： {{question.correctAnswer}}</span>
+    <el-row>
+    <el-col :span="12">
+      <el-button @click="addItem">新增问题</el-button>
+      <el-button @click="saveDraftQuestions">暂存试卷</el-button>
+      <el-button @click="readDraftQuestions">读取暂存试卷</el-button>
+      <a href="javascript:;" class="file">选择答案文件:
+        <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()"
+            onchange="return fileUpload_onselect()" />
+      </a>
+      <a href="javascript:;" class="file">选择问题文件
+        <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
+      </a>
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="问题背景">
+          <el-input v-model="question.stem"></el-input>
+        </el-form-item>
+        <el-form-item label="question">
+          <el-input v-model="question.question"></el-input>
+        </el-form-item>
+        <el-form-item label="option one">
+          <el-input v-model="question.input.options[0].label"></el-input>
+          <el-input v-model="question.input.options[0].value"></el-input>
+        </el-form-item>
+        <el-form-item label="option two">
+          <el-input v-model="question.input.options[1].label"></el-input>
+          <el-input v-model="question.input.options[1].value"></el-input>
+        </el-form-item>
+        <el-form-item label="option three">
+          <el-input v-model="question.input.options[2].label"></el-input>
+          <el-input v-model="question.input.options[2].value"></el-input>
+        </el-form-item>
+        <el-form-item label="选项4">
+          <el-input v-model="question.input.options[3].label"></el-input>
+          <el-input v-model="question.input.options[3].value"></el-input>
+        </el-form-item>
+        <el-form-item label="答案">
+          <el-radio v-model="question.correctAnswer" label="A">A</el-radio>
+          <el-radio v-model="question.correctAnswer" label="B">B</el-radio>
+          <el-radio v-model="question.correctAnswer" label="C">C</el-radio>
+          <el-radio v-model="question.correctAnswer" label="D">D</el-radio>
+        </el-form-item>
+      </el-form>
+    </el-col>
+
+    <el-col :span="12">
+      <el-button @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
+      <el-button @click="exportCorrectAnswers">导出答案</el-button>
+      <div id='questions'>
+        <div v-for="(question, index) in questions">
+        <el-select v-model='question.answer'  placeholder='请选择'>
+                <el-option v-for='item in question.input.options' :key='item.value':label='item.label' :value='item.value'> 
+                </el-option> 
+            </el-select>
+          <span v-if="question.correctAnswer" label="D">正确答案： {{question.correctAnswer}}</span>
+        </div>
       </div>
-    </div>
+    </el-col>
+    </el-row>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
     <router-view></router-view>
@@ -131,6 +135,7 @@ export default {
     exportCorrectAnswers() {
       return window.exportCorrectAnswers()
     },
+    // 
     async saveDraftQuestions() {
       let instance = await getInstance({
           autoIncrement: true,

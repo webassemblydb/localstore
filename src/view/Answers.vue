@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button @click="makeAnswers">回答问题</el-button>
+    <!-- <el-button @click="makeAnswers">回答问题</el-button> -->
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
     <router-view></router-view>

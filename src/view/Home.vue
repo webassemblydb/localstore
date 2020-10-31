@@ -22,12 +22,12 @@ export default {
   methods: {
     generateQuestions () {
       this.$router.push({
-        path: 'questions'
+        path: 'questions/generate'
       })
     },
     makeAnswers () {
       this.$router.push({
-        path: 'answers'
+        path: 'answers/make'
       })
     },
     review () {

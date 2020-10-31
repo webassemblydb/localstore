@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 // 0. 如果使用模块化机制编程，导入Vue和VueRouter，要调用 Vue.use(VueRouter)
-import Setting from '@questions/view/setting.vue'
+// import Setting from '@questions/view/setting.vue'
 import Home from '@questions/view/Home.vue'
 import GenerateQuestions from '@questions/view/questions/Generate.vue'
 import Make from '@questions/view/answers/Make.vue'
@@ -19,12 +19,12 @@ const routes = [
       path: '/', 
       component: Home 
   },
-  {
-      path: '/setting', 
-      component: Setting,
-      children:  [
-      ]
-  },
+  // {
+  //     path: '/setting', 
+  //     component: Setting,
+  //     children:  [
+  //     ]
+  // },
   {
       path: '/questions', 
       component: Questions,

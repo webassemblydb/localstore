@@ -1,29 +1,39 @@
 
 <template>
   <div id="app">
-    <div>
-      <label for="questions_importer">选择问题文件:</label>
-      <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
-    </div>
-    <div>
+    <el-row>
+    <el-col :span="12">
+    <!-- <div> -->
+      <a href="javascript:;" class="file">选择问题文件:
+        <!-- <label for="questions_importer">选择问题文件:</label> -->
+        <input type="file" value="导入问题" id="questions_importer" onchange="return importQuestions()" onclick="return importQuestions()" />
+      </a>
+    <!-- </div>
+    <div> -->
       <input type="button" value="暂存答案" id="draft" onclick="saveDraft()">
       <input type="button" value="读取暂存答案" id="draft" onclick="readDraft()">
-    </div>
-    <div>
-      <el-button @click="score">查看得分</el-button>
+    <!-- </div> -->
+    <!-- <div> -->
+      <!-- <el-button @click="score">查看得分</el-button> -->
       <el-button @click="exportAnswers">导出答案</el-button>
       <div>
-        <label for="uploadAnswers">选择答案文件:</label>
+        <a href="javascript:;" class="file">选择答案文件:
+        <!-- <label for="uploadAnswers">选择答案文件:</label> -->
         <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()" onchange="return fileUpload_onselect()" />
+        </a>
       </div>
-    </div>
-    <div id='questions'>
-    </div>
-    <!-- 路由出口 -->
-    <!-- 路由匹配到的组件将渲染在这里 -->
-    <router-view></router-view>
-    <!-- 引入 echarts.js -->
-    <div id="main" style="width: 600px;height:400px;"></div>
+    <!-- </div> -->
+    </el-col>
+    <el-col :span="12">
+      <div id='questions'>
+      </div>
+      <!-- 路由出口 -->
+      <!-- 路由匹配到的组件将渲染在这里 -->
+      <router-view></router-view>
+      <!-- 引入 echarts.js -->
+      <div id="main" style="width: 600px;height:400px;"></div>
+    </el-col>
+    </el-row>
   </div>
 </template>
 
