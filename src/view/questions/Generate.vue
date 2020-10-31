@@ -5,7 +5,7 @@
     <el-col :span="12">
       <el-row class="row-bg">
         <el-col :span="6">
-          <el-button @click="addItem">新增问题</el-button>
+          <el-button type="primary" @click="addItem">新增问题</el-button>
         </el-col>
         <el-col :span="18">
           <el-row type="flex" class="row-bg" justify="end">
@@ -55,7 +55,7 @@
     </el-col>
 
     <el-col :span="12">
-      <el-button @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
+      <el-button type="primary" @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
       <el-button @click="exportQuestionsWithAnswers">{{$t('exportQuestionsWithAnswers')}}</el-button>
       <el-button @click="exportCorrectAnswers">导出答案</el-button>
       <el-button @click="saveDraftQuestions">暂存试卷</el-button>

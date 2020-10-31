@@ -8,12 +8,12 @@
       </a>
     </el-col>
     <el-col :span="12">
+      <el-button type="primary" @click="exportAnswers">导出答案</el-button>
       <el-button @click="saveDraft">暂存答案</el-button>
       <el-button @click="readDraft">读取暂存答案</el-button>
       <!-- <input type="button" value="暂存答案" id="draft" onclick="saveDraft()">
       <input type="button" value="读取暂存答案" id="draft" onclick="readDraft()"> -->
       <!-- <el-button @click="score">查看得分</el-button> -->
-      <el-button @click="exportAnswers">导出答案</el-button>
         <a href="javascript:;" class="file">选择答案文件
         <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()" onchange="return fileUpload_onselect()" />
         </a>
