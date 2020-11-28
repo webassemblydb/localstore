@@ -56,6 +56,7 @@
 
     <el-col :span="12">
       <el-button type="primary" @click="exportQuestions">{{$t('exportQuestion')}}</el-button>
+      <el-button @click="exportOnlineQuestions">导出在线问题链接</el-button>
       <el-button @click="exportQuestionsWithAnswers">{{$t('exportQuestionsWithAnswers')}}</el-button>
       <el-button @click="exportCorrectAnswers">导出答案</el-button>
       <el-button @click="saveDraftQuestions">暂存试卷</el-button>
@@ -84,12 +85,16 @@ import {
 // 基于准备好的dom，初始化echarts实例
 import {
     getQuestions, 
-    setQuestions
+    setQuestions,
+    getQuestionUrl
 } from '@questions/utils/questions'
 import {
   initialize
 } from '@questions/utils/initialize'
 import Vue from 'vue';
+import {
+  copyToClip
+} from '@questions/core'
 export default {
   i18n,
   name: 'GenerateQuestions',
@@ -142,6 +147,20 @@ export default {
     exportQuestions (){
       return window.exportQuestions({
         isIncludeAnswers: false
+      })
+    },
+    // 导出在线试卷
+    async exportOnlineQuestions (){
+      // 获取链接地址
+      let url = await getQuestionUrl({
+        pathname:location.pathname,
+        questions: this.questions || [],
+        origin: location.origin
+      })
+      // 拷贝到剪贴板
+      copyToClip({
+        content:url,
+        message: '拷贝成功'
       })
     },
     // 导出试卷和答案

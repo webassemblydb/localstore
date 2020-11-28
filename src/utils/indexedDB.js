@@ -1,3 +1,7 @@
+/**
+ * @file 本地存储
+ * @param {*} param0 
+ */
 function getInstance({
   autoIncrement,
   databaseName,

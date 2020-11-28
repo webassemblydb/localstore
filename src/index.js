@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
 import $ from 'jquery'
+// window.jQuery = $
 import _ from 'lodash'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/index.css';
