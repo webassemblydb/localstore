@@ -31,12 +31,19 @@
 
 <script>
 import _ from 'lodash'
+import {
+  getUrlParam
+} from '@questions/core'
 // 基于准备好的dom，初始化echarts实例
 var echarts = require('echarts');
 import {
     getQuestions, 
     setQuestions
 } from '@questions/utils/questions'
+import { getQuestionsFromUrl } from '@questions/utils/questions';
+import {
+  initialize
+} from '@questions/utils/initialize'
 export default {
   name: 'App',
   data() {
@@ -44,6 +51,19 @@ export default {
     }
   },
   methods: {
+    async importQuestions() {
+      console.log('importQuestions')
+      // let questionsInUrl = getUrlParam('questions')
+      let questionsInUrl = await getQuestionsFromUrl()
+      if (questionsInUrl) {
+        console.log('questions in url')
+        console.log(questionsInUrl)
+        await setQuestions({
+          questions: questionsInUrl
+        })
+      } else {
+      }
+    },
     saveDraft () {
       return window.saveDraft()
     },
@@ -96,7 +116,9 @@ export default {
       });
     }
   },
-  mounted () {
+  async mounted () {
+    await this.importQuestions()
+    initialize()
   }
 }
 </script>

@@ -7,6 +7,7 @@ import {
 import {
     mountQuestions
 } from '@questions/utils/mount'
+
 export async function initialize() {
     console.log('initialize.....')
     // 获取问题列表
