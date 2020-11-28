@@ -40,6 +40,7 @@ export const getQuestionUrl = async ({
 // 从URL链接中获取questions
 export const getQuestionsFromUrl = async () => {
     let questionsUrlParam = getUrlParam('questions')
+    console.log('questionsUrlParam', questionsUrlParam)
     let questions = JSON.parse(questionsUrlParam)
     return questions
 }
