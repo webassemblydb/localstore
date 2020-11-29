@@ -9,14 +9,12 @@
     </el-col>
     <el-col :span="12">
       <el-button type="primary" @click="exportAnswers">导出答案</el-button>
+      <el-button @click="generateOnlineAnswerSheetLink">生成答案链接</el-button>
       <el-button @click="saveDraft">暂存答案</el-button>
       <el-button @click="readDraft">读取暂存答案</el-button>
-      <!-- <input type="button" value="暂存答案" id="draft" onclick="saveDraft()">
-      <input type="button" value="读取暂存答案" id="draft" onclick="readDraft()"> -->
-      <!-- <el-button @click="score">查看得分</el-button> -->
-        <a href="javascript:;" class="file">选择答案文件
+      <a href="javascript:;" class="file">从文件中读取暂存答案
         <input type="file" value="导入答案" id="uploadAnswers" onclick="return fileUpload_onclick()" onchange="return fileUpload_onselect()" />
-        </a>
+      </a>
       <div id='questions'>
       </div>
       <!-- 路由出口 -->
@@ -30,6 +28,9 @@
 </template>
 
 <script>
+/**
+ * @description 回答页面
+ */
 import _ from 'lodash'
 import {
   getUrlParam
@@ -41,16 +42,39 @@ import {
     setQuestions
 } from '@questions/utils/questions'
 import { getQuestionsFromUrl } from '@questions/utils/questions';
+import { generateAnswerSheetLinkUrl } from '@questions/utils/answers';
 import {
   initialize
 } from '@questions/utils/initialize'
+import {
+  copyToClip
+} from '@questions/core'
+import {
+  i18n
+} from './i18n'
 export default {
-  name: 'App',
+  name: 'MakeAnswer',
   data() {
     return {
     }
   },
   methods: {
+    // 生成答案链接
+    async generateOnlineAnswerSheetLink() {
+      // 生成答案链接
+      let questions = await getQuestions()
+      let url = await generateAnswerSheetLinkUrl({
+        questions,
+        pathname:location.pathname,
+        origin: location.origin 
+      })
+      // 拷贝到剪贴板
+      copyToClip({
+        content: url,
+        message: '拷贝成功'
+      })
+    },
+    // 从文件中读取问题列表
     async importQuestions() {
       console.log('importQuestions')
       // let questionsInUrl = getUrlParam('questions')
@@ -64,12 +88,15 @@ export default {
       } else {
       }
     },
+    // 暂存答案到indexedDB
     saveDraft () {
       return window.saveDraft()
     },
+    // 从indexedDB读取数据
     readDraft () {
       return window.readDraft()
     },
+    // 导出答案
     exportAnswers () {
       return window.exportAnswers()
     },
@@ -77,11 +104,9 @@ export default {
     async getSum () {
       let questions = await getQuestions()
       console.log(questions)
-      window.questions = questions
       let score = _.sum(_.map(questions, (item) => {
           return item.score 
       }))
-      // alert(score)
       return score
     },
     // 获取分数
@@ -117,6 +142,7 @@ export default {
     }
   },
   async mounted () {
+    // 从URL链接中自动获取问题列表并显示
     await this.importQuestions()
     initialize()
   }

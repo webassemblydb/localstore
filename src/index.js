@@ -63,6 +63,7 @@ async function getCorrectAnswers() {
     return answers;
 }
 
+// 获取答案
 async function getAnswers() {
     let questions = await getQuestions()
     let answers = _.map(questions, (item) => { return _.get(item, 'answer')});
@@ -255,6 +256,11 @@ async function initialize() {
 }
 // initialize()
 
+// 计算总分
+
+/**
+ * @description 通过对比问题中的正确答案和提供的答案，如果一样则得分，如果不一样则0分
+ */
 window.score = async function score() {
     let questions = await getQuestions()
     let score = _.sum(_.map(questions, (item) => {

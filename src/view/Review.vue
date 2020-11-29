@@ -30,10 +30,14 @@
 import _ from 'lodash'
 // 基于准备好的dom，初始化echarts实例
 var echarts = require('echarts');
+import { getQuestionsFromUrl } from '@questions/utils/questions';
 import {
     getQuestions, 
     setQuestions
 } from '@questions/utils/questions'
+import {
+  initialize
+} from '@questions/utils/initialize'
 export default {
   name: 'App',
   data() {
@@ -42,6 +46,19 @@ export default {
     }
   },
   methods: {
+    // 从文件中读取问题列表
+    async importQuestions() {
+      console.log('import questions from url')
+      let questionsInUrl = await getQuestionsFromUrl()
+      if (questionsInUrl) {
+        console.log('questions in url')
+        console.log(questionsInUrl)
+        await setQuestions({
+          questions: questionsInUrl
+        })
+      } else {
+      }
+    },
     // 获取总分
     async getSum () {
       let questions = await getQuestions()
@@ -50,7 +67,6 @@ export default {
       let score = _.sum(_.map(questions, (item) => {
           return item.score 
       }))
-      // alert(score)
       return score
     },
     // 获取分数
@@ -88,7 +104,10 @@ export default {
       })
     }
   },
-  mounted () {
+  async mounted () {
+    // 从URL链接中自动获取问题列表并显示
+    await this.importQuestions()
+    initialize()
   }
 }
 </script>
